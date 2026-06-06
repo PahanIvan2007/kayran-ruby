@@ -1,0 +1,113 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 animate-in">
+    <div>
+      <h1 class="fw-bold mb-1">Панель управления</h1>
+      <p class="text-muted mb-0">Добро пожаловать, <%= current_user.first_name || current_user.email %></p>
+    </div>
+    <%= link_to new_event_path, class: "btn btn-primary btn-modern" do %>
+      <i class="bi bi-plus-lg me-1"></i> Новое событие
+    <% end %>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3 animate-in">
+      <div class="stat-card blue">
+        <div class="stat-icon bi bi-calendar-event mb-2"></div>
+        <div class="stat-number"><%= @events_count %></div>
+        <div class="stat-label">Событий</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3 animate-in">
+      <div class="stat-card teal">
+        <div class="stat-icon bi bi-geo-alt mb-2"></div>
+        <div class="stat-number"><%= @points_count %></div>
+        <div class="stat-label">Точек активно</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3 animate-in">
+      <div class="stat-card dark">
+        <div class="stat-icon bi bi-boat mb-2"></div>
+        <div class="stat-number"><%= @boats_available %></div>
+        <div class="stat-label">Лодок доступно</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3 animate-in">
+      <div class="stat-card" style="background: linear-gradient(135deg, #9333ea, #a855f7);">
+        <div class="stat-icon bi bi-lightning mb-2"></div>
+        <div class="stat-number"><%= @active_events.count %></div>
+        <div class="stat-label">Активных событий</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-lg-6 animate-in">
+      <div class="card h-100">
+        <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center py-3">
+          <span class="fw-bold"><i class="bi bi-lightning-fill text-primary me-2"></i>Активные события</span>
+          <%= link_to "Все", events_path, class: "btn btn-sm btn-outline-primary btn-modern" %>
+        </div>
+        <div class="list-group list-group-flush">
+          <% if @active_events.any? %>
+            <% @active_events.each do |event| %>
+              <%= link_to event_path(event), class: "list-group-item list-group-item-action border-0 py-3" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="fw-medium"><%= event.title %></span>
+                    <small class="text-muted d-block"><%= event.point&.title %></small>
+                  </div>
+                  <span class="badge bg-primary badge-modern"><%= t("activerecord.attributes.event.event_types.#{event.event_type}") %></span>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-muted text-center py-4">Нет активных событий</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 animate-in">
+      <div class="card h-100">
+        <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center py-3">
+          <span class="fw-bold"><i class="bi bi-clock-history text-primary me-2"></i>Последние аренды</span>
+          <%= link_to "Все", rentals_path, class: "btn btn-sm btn-outline-primary btn-modern" %>
+        </div>
+        <div class="list-group list-group-flush">
+          <% if @recent_rentals.any? %>
+            <% @recent_rentals.each do |rental| %>
+              <%= link_to rental_path(rental), class: "list-group-item list-group-item-action border-0 py-3" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="fw-medium">Лодка: <%= rental.boat&.serial_number %></span>
+                    <small class="text-muted d-block"><%= l(rental.created_at, format: :short) %></small>
+                  </div>
+                  <span class="badge badge-modern bg-<%= rental.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.rental.statuses.#{rental.status}") %></span>
+                </div>
+              <% end %>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-muted text-center py-4">Нет аренд</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4 animate-in">
+    <div class="col-12">
+      <div class="card card-glass">
+        <div class="card-body py-4">
+          <h5 class="fw-bold mb-3"><i class="bi bi-lightning-charge me-2 text-primary"></i>Быстрые действия</h5>
+          <div class="d-flex flex-wrap gap-2">
+            <%= link_to new_event_path, class: "btn btn-primary btn-modern" do %><i class="bi bi-plus-lg me-1"></i> Событие<% end %>
+            <%= link_to new_point_path, class: "btn btn-success btn-modern" do %><i class="bi bi-plus-lg me-1"></i> Точку<% end %>
+            <%= link_to new_boat_path, class: "btn btn-info btn-modern text-white" do %><i class="bi bi-plus-lg me-1"></i> Лодку<% end %>
+            <%= link_to new_route_path, class: "btn btn-warning btn-modern text-white" do %><i class="bi bi-plus-lg me-1"></i> Маршрут<% end %>
+            <%= link_to new_rental_path, class: "btn btn-secondary btn-modern" do %><i class="bi bi-plus-lg me-1"></i> Аренду<% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

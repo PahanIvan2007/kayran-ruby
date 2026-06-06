@@ -1,0 +1,38 @@
+<div class="page-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h1>Аренда</h1>
+      <p>Журнал аренды плавсредств</p>
+    </div>
+    <%= link_to new_rental_path, class: "btn btn-light btn-modern" do %>
+      <i class="bi bi-plus-lg me-1"></i> Новая аренда
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-modern align-middle">
+      <thead>
+        <tr>
+          <th>Лодка</th>
+          <th>Событие</th>
+          <th>Начало</th>
+          <th>Статус</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rentals.each do |rental| %>
+          <tr>
+            <td class="fw-medium"><%= rental.boat&.serial_number %></td>
+            <td><%= rental.event&.title %></td>
+            <td><%= l(rental.start_time, format: :short) %></td>
+            <td><span class="badge badge-modern bg-<%= rental.active? ? 'success' : rental.completed? ? 'secondary' : 'danger' %>"><%= t("activerecord.attributes.rental.statuses.#{rental.status}") %></span></td>
+            <td><%= link_to rental, class: "btn btn-sm btn-outline-primary" do %><i class="bi bi-eye"></i> Подробнее<% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

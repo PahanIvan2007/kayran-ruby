@@ -1,0 +1,87 @@
+<div class="container py-4">
+  <div class="mb-3">
+    <%= link_to boats_path, class: "btn btn-outline-secondary btn-sm btn-modern" do %><i class="bi bi-arrow-left me-1"></i> Назад<% end %>
+  </div>
+
+  <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-modern bg-<%= @boat.available? ? 'success' : 'warning' %>"><%= t("activerecord.attributes.boat.statuses.#{@boat.status}") %></span>
+            <span class="badge badge-modern bg-<%= @boat.excellent? ? 'success' : @boat.good? ? 'info' : 'warning' %>"><%= t("activerecord.attributes.boat.condition_levels.#{@boat.condition_level}") %></span>
+          </div>
+          <h1 class="fw-bold mb-1" style="font-size: 1.75rem;"><i class="bi bi-boat me-2"></i><%= @boat.serial_number %></h1>
+        </div>
+        <%= link_to edit_boat_path(@boat), class: "btn btn-primary btn-modern" do %><i class="bi bi-pencil"></i> Изменить<% end %>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-secondary bg-opacity-10 text-secondary" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-tag fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Тип</small>
+              <span class="fw-medium"><%= @boat.boat_type %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-palette fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Цвет</small>
+              <span class="fw-medium"><%= @boat.color || "—" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-people fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Вместимость</small>
+              <span class="fw-medium"><%= @boat.capacity || "—" %> чел.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 text-info" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-geo-alt fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Точка</small>
+              <span class="fw-medium"><%= link_to @boat.point&.title, @boat.point if @boat.point %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-tools fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Последнее ТО</small>
+              <span class="fw-medium"><%= l(@boat.last_service_date, format: :short) if @boat.last_service_date %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm mt-3" style="border-radius: 12px;">
+    <div class="card-header bg-transparent border-bottom fw-bold py-3"><i class="bi bi-clock-history me-2 text-primary"></i>История аренд</div>
+    <div class="list-group list-group-flush">
+      <% if @rentals.any? %>
+        <% @rentals.each do |rental| %>
+          <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+            <div>
+              <span class="fw-medium"><%= rental.user&.full_name %></span>
+              <small class="text-muted d-block"><%= l(rental.start_time, format: :short) %></small>
+            </div>
+            <span class="badge badge-modern bg-<%= rental.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.rental.statuses.#{rental.status}") %></span>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="list-group-item text-muted text-center py-4">Нет аренд</div>
+      <% end %>
+    </div>
+  </div>
+</div>

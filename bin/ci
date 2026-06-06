@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby.exe
+require File.expand_path("config/boot", Dir.pwd)
+require "active_support/continuous_integration"
+
+CI = ActiveSupport::ContinuousIntegration
+require File.expand_path("config/ci.rb", Dir.pwd)

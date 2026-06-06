@@ -1,0 +1,29 @@
+<div class="page-header">
+  <div class="container">
+    <h1>Новая франшиза</h1>
+    <p>Создание новой франшизы</p>
+  </div>
+</div>
+<div class="container">
+  <div class="card border-0 shadow-sm" style="border-radius: 12px; max-width: 600px;">
+    <div class="card-body p-4">
+      <%= form_with(model: @franchise, class: "row g-4") do |f| %>
+        <% if @franchise.errors.any? %>
+          <div class="col-12">
+            <div class="alert alert-danger d-flex align-items-center gap-2">
+              <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
+              <div>
+                <strong><%= pluralize(@franchise.errors.count, "ошибка") %>:</strong>
+                <ul class="mb-0 mt-1"><% @franchise.errors.each do |err| %><li><%= err.full_message %></li><% end %></ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-12"><%= f.label :title, class: "form-label fw-medium" %><%= f.text_field :title, class: "form-control", required: true, placeholder: "Название франшизы" %></div>
+        <div class="col-12 col-md-6"><%= f.label :owner_id, class: "form-label fw-medium" %><%= f.collection_select :owner_id, User.system_admin.or(User.where(role: :franchise_admin)).order(:first_name), :id, :full_name, { include_blank: "—" }, class: "form-select" %></div>
+        <div class="col-12 col-md-6"><%= f.label :status, class: "form-label fw-medium" %><%= f.select :status, Franchise.statuses.keys.map { |k| [t("activerecord.attributes.franchise.statuses.#{k}"), k] }, {}, class: "form-select" %></div>
+        <div class="col-12 d-flex gap-2 pt-3 border-top"><%= f.submit class: "btn btn-primary btn-modern px-4" %><%= link_to "Отмена", franchises_path, class: "btn btn-outline-secondary btn-modern px-4" %></div>
+      <% end %>
+    </div>
+  </div>
+</div>

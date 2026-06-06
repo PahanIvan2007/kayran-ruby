@@ -1,0 +1,36 @@
+<div class="page-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h1>Турниры</h1>
+      <p>Соревнования и турнирные сетки</p>
+    </div>
+    <%= link_to new_tournament_path, class: "btn btn-light btn-modern" do %>
+      <i class="bi bi-plus-lg me-1"></i> Новый турнир
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-modern align-middle">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Формат</th>
+          <th>Статус</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tournaments.each do |t| %>
+          <tr>
+            <td><%= link_to t.title, t, class: "fw-medium text-decoration-none" %></td>
+            <td><span class="badge badge-modern bg-info"><%= t("activerecord.attributes.tournament.formats.#{t.format}") %></span></td>
+            <td><span class="badge badge-modern bg-<%= t.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.tournament.statuses.#{t.status}") %></span></td>
+            <td><%= link_to edit_tournament_path(t), class: "btn btn-sm btn-outline-primary" do %><i class="bi bi-pencil"></i><% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

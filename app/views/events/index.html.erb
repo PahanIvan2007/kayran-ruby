@@ -1,0 +1,45 @@
+<div class="page-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h1>События</h1>
+      <p>Управление мероприятиями и активностями</p>
+    </div>
+    <%= link_to new_event_path, class: "btn btn-light btn-modern" do %>
+      <i class="bi bi-plus-lg me-1"></i> Новое событие
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-modern align-middle">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Тип</th>
+          <th>Точка</th>
+          <th>Начало</th>
+          <th>Статус</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events.each do |event| %>
+          <tr>
+            <td><%= link_to event.title, event, class: "fw-medium text-decoration-none" %></td>
+            <td><span class="badge badge-modern bg-info"><%= t("activerecord.attributes.event.event_types.#{event.event_type}") %></span></td>
+            <td><%= event.point&.title %></td>
+            <td><%= l(event.start_time, format: :short) if event.start_time %></td>
+            <td><span class="badge badge-modern bg-<%= event.active? ? 'success' : event.completed? ? 'secondary' : event.cancelled? ? 'danger' : 'warning' %>"><%= t("activerecord.attributes.event.statuses.#{event.status}") %></span></td>
+            <td>
+              <div class="d-flex gap-1">
+                <%= link_to qr_event_path(event), class: "btn btn-sm btn-outline-secondary", target: "_blank", title: "QR-код" do %><i class="bi bi-qr-code"></i><% end %>
+                <%= link_to edit_event_path(event), class: "btn btn-sm btn-outline-primary", title: "Изменить" do %><i class="bi bi-pencil"></i><% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

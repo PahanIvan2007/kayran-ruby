@@ -1,0 +1,40 @@
+<div class="page-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h1>Лодки</h1>
+      <p>Управление плавсредствами и оборудованием</p>
+    </div>
+    <%= link_to new_boat_path, class: "btn btn-light btn-modern" do %>
+      <i class="bi bi-plus-lg me-1"></i> Добавить лодку
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-modern align-middle">
+      <thead>
+        <tr>
+          <th>Номер</th>
+          <th>Тип</th>
+          <th>Точка</th>
+          <th>Статус</th>
+          <th>Состояние</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @boats.each do |boat| %>
+          <tr>
+            <td><%= link_to boat.serial_number, boat, class: "fw-medium text-decoration-none" %></td>
+            <td><span class="badge badge-modern bg-secondary"><%= boat.boat_type %></span></td>
+            <td><%= boat.point&.title %></td>
+            <td><span class="badge badge-modern bg-<%= boat.available? ? 'success' : boat.rented? ? 'warning' : 'secondary' %>"><%= t("activerecord.attributes.boat.statuses.#{boat.status}") %></span></td>
+            <td><span class="badge badge-modern bg-<%= boat.excellent? ? 'success' : boat.good? ? 'info' : 'warning' %>"><%= t("activerecord.attributes.boat.condition_levels.#{boat.condition_level}") %></span></td>
+            <td><%= link_to edit_boat_path(boat), class: "btn btn-sm btn-outline-primary" do %><i class="bi bi-pencil"></i> Изменить<% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

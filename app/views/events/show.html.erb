@@ -1,0 +1,127 @@
+<div class="container py-4">
+  <div class="mb-3">
+    <%= link_to events_path, class: "btn btn-outline-secondary btn-sm btn-modern" do %><i class="bi bi-arrow-left me-1"></i> Назад<% end %>
+  </div>
+
+  <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge badge-modern bg-<%= @event.active? ? 'success' : @event.completed? ? 'secondary' : 'warning' %>"><%= t("activerecord.attributes.event.statuses.#{@event.status}") %></span>
+            <span class="badge badge-modern bg-info"><%= t("activerecord.attributes.event.event_types.#{@event.event_type}") %></span>
+          </div>
+          <h1 class="fw-bold mb-1" style="font-size: 1.75rem;"><%= @event.title %></h1>
+        </div>
+        <div class="d-flex gap-1">
+          <%= link_to qr_event_path(@event), class: "btn btn-outline-secondary btn-modern", target: "_blank", title: "QR-код" do %><i class="bi bi-qr-code"></i><% end %>
+          <%= link_to edit_event_path(@event), class: "btn btn-primary btn-modern" do %><i class="bi bi-pencil"></i> Изменить<% end %>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-calendar-check fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Начало</small>
+              <span class="fw-medium"><%= l(@event.start_time, format: :long) if @event.start_time %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-calendar-x fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Окончание</small>
+              <span class="fw-medium"><%= l(@event.end_time, format: :long) if @event.end_time %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-geo-alt fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Точка</small>
+              <span class="fw-medium"><%= @event.point&.title || "—" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-signpost-2 fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Маршрут</small>
+              <span class="fw-medium"><%= @event.route&.title || "—" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 text-info" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-person fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Создатель</small>
+              <span class="fw-medium"><%= @event.user&.full_name || "—" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-secondary bg-opacity-10 text-secondary" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-eye fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Видимость</small>
+              <span class="fw-medium"><%= t("activerecord.attributes.event.visibilities.#{@event.visibility}") %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if @event.description.present? %>
+        <div class="mt-3 p-3 rounded-3" style="background: #f8fafc;">
+          <h6 class="fw-bold"><i class="bi bi-file-text me-2 text-primary"></i>Описание</h6>
+          <p class="text-muted mb-0"><%= @event.description %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-2">
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="card-header bg-transparent border-bottom fw-bold py-3"><i class="bi bi-boat me-2 text-primary"></i>Аренды</div>
+        <div class="list-group list-group-flush">
+          <% if @rentals.any? %>
+            <% @rentals.each do |rental| %>
+              <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                <div>
+                  <span class="fw-medium"><%= rental.boat&.serial_number %></span>
+                  <small class="text-muted d-block"><%= rental.user&.full_name %></small>
+                </div>
+                <span class="badge badge-modern bg-<%= rental.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.rental.statuses.#{rental.status}") %></span>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-muted text-center py-4">Нет аренд</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="card-header bg-transparent border-bottom fw-bold py-3"><i class="bi bi-satellite me-2 text-primary"></i>GPS-треки</div>
+        <div class="list-group list-group-flush">
+          <% if @gps_tracks.any? %>
+            <% @gps_tracks.each do |track| %>
+              <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                <span class="fw-medium"><%= track.user&.full_name %></span>
+                <span class="badge badge-modern bg-<%= track.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.gps_track.statuses.#{track.status}") %></span>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-muted text-center py-4">Нет треков</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

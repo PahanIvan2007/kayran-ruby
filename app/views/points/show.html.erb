@@ -1,0 +1,93 @@
+<div class="container py-4">
+  <div class="mb-3">
+    <%= link_to points_path, class: "btn btn-outline-secondary btn-sm btn-modern" do %><i class="bi bi-arrow-left me-1"></i> Назад<% end %>
+  </div>
+
+  <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <div class="d-flex gap-2 mb-1">
+            <span class="badge badge-modern bg-info"><%= t("activerecord.attributes.point.point_types.#{@point.point_type}") %></span>
+            <span class="badge badge-modern bg-<%= @point.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.point.statuses.#{@point.status}") %></span>
+          </div>
+          <h1 class="fw-bold mb-1" style="font-size: 1.75rem;"><i class="bi bi-geo-alt-fill text-primary me-2"></i><%= @point.title %></h1>
+        </div>
+        <div class="d-flex gap-1">
+          <%= link_to qr_point_path(@point), class: "btn btn-outline-secondary btn-modern", target: "_blank", title: "QR-код" do %><i class="bi bi-qr-code"></i><% end %>
+          <%= link_to edit_point_path(@point), class: "btn btn-primary btn-modern" do %><i class="bi bi-pencil"></i> Изменить<% end %>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-secondary bg-opacity-10 text-secondary" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-house fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Адрес</small>
+              <span class="fw-medium"><%= @point.address || "—" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-globe fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Координаты</small>
+              <span class="fw-medium"><%= @point.lat %>, <%= @point.lng %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-building fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Франшиза</small>
+              <span class="fw-medium"><%= @point.franchise&.title || "—" %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-2">
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center fw-bold py-3">
+          <span><i class="bi bi-boat me-2 text-primary"></i>Лодки</span>
+          <%= link_to new_boat_path(point_id: @point.id), class: "btn btn-sm btn-outline-primary btn-modern" do %><i class="bi bi-plus-lg"></i> Добавить<% end %>
+        </div>
+        <div class="list-group list-group-flush">
+          <% if @boats.any? %>
+            <% @boats.each do |boat| %>
+              <%= link_to boat_path(boat), class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3" do %>
+                <span class="fw-medium"><%= boat.serial_number %></span>
+                <span class="badge badge-modern bg-<%= boat.available? ? 'success' : 'warning' %>"><%= t("activerecord.attributes.boat.statuses.#{boat.status}") %></span>
+              <% end %>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-muted text-center py-4">Нет лодок</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="card-header bg-transparent border-bottom fw-bold py-3"><i class="bi bi-calendar-event me-2 text-primary"></i>Предстоящие события</div>
+        <div class="list-group list-group-flush">
+          <% if @events.any? %>
+            <% @events.each do |event| %>
+              <%= link_to event_path(event), class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3" do %>
+                <span class="fw-medium"><%= event.title %></span>
+                <small><%= l(event.start_time, format: :short) %></small>
+              <% end %>
+            <% end %>
+          <% else %>
+            <div class="list-group-item text-muted text-center py-4">Нет событий</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

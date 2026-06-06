@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby.exe
+$:.unshift(File.expand_path("config", Dir.pwd))
+APP_PATH = File.expand_path("config/application", Dir.pwd)
+require File.expand_path("config/boot", Dir.pwd)
+require "rails/commands"

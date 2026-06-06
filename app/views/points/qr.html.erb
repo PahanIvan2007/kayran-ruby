@@ -1,0 +1,19 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4 text-center">
+      <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="card-body p-4">
+          <h1 class="fw-bold mb-1"><%= @point.title %></h1>
+          <p class="text-muted mb-4">Отсканируйте QR-код для доступа к точке</p>
+          <div class="d-inline-block p-3 rounded-3" style="background: #f8fafc;">
+            <%= raw @qr.as_svg(module_size: 6, standalone: true, use_path: true) %>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex gap-2 justify-content-center mt-3">
+        <%= link_to @point, class: "btn btn-outline-secondary btn-modern" do %><i class="bi bi-arrow-left me-1"></i> Назад<% end %>
+        <button class="btn btn-primary btn-modern" onclick="window.print()"><i class="bi bi-printer me-1"></i> Печать</button>
+      </div>
+    </div>
+  </div>
+</div>

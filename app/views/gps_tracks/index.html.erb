@@ -1,0 +1,35 @@
+<div class="page-header">
+  <div class="container">
+    <div>
+      <h1>GPS-треки</h1>
+      <p>Отслеживание маршрутов и передвижений</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-modern align-middle">
+      <thead>
+        <tr>
+          <th>Пользователь</th>
+          <th>Событие</th>
+          <th>Начало</th>
+          <th>Статус</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @gps_tracks.each do |t| %>
+          <tr>
+            <td class="fw-medium"><%= t.user&.full_name %></td>
+            <td><%= t.event&.title %></td>
+            <td><%= l(t.started_at, format: :short) %></td>
+            <td><span class="badge badge-modern bg-<%= t.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.gps_track.statuses.#{t.status}") %></span></td>
+            <td><%= link_to t, class: "btn btn-sm btn-outline-primary" do %><i class="bi bi-eye"></i> Подробнее<% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

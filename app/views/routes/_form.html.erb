@@ -1,0 +1,100 @@
+<%= form_with(model: route, class: "row g-4") do |f| %>
+  <% if route.errors.any? %>
+    <div class="col-12">
+      <div class="alert alert-danger d-flex align-items-center gap-2">
+        <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
+        <div>
+          <strong><%= pluralize(route.errors.count, "ошибка") %>:</strong>
+          <ul class="mb-0 mt-1">
+            <% route.errors.each do |err| %>
+              <li><%= err.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="col-12">
+    <%= f.label :title, class: "form-label fw-medium" %>
+    <%= f.text_field :title, class: "form-control", required: true, placeholder: "Название маршрута" %>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <%= f.label :difficulty, class: "form-label fw-medium" %>
+    <%= f.select :difficulty, Route.difficulties.keys.map { |k| [t("activerecord.attributes.route.difficulties.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <%= f.label :route_type, class: "form-label fw-medium" %>
+    <%= f.select :route_type, Route.route_types.keys.map { |k| [t("activerecord.attributes.route.route_types.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <%= f.label :status, class: "form-label fw-medium" %>
+    <%= f.select :status, Route.statuses.keys.map { |k| [t("activerecord.attributes.route.statuses.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :distance_km, class: "form-label fw-medium" %>
+    <%= f.number_field :distance_km, step: 0.1, class: "form-control", placeholder: "0.0" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :estimated_duration, class: "form-label fw-medium" %>
+    <%= f.number_field :estimated_duration, class: "form-control", placeholder: "минут" %>
+  </div>
+
+  <div class="col-12">
+    <%= f.label :description, class: "form-label fw-medium" %>
+    <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Описание маршрута..." %>
+  </div>
+
+  <div class="col-12">
+    <hr class="my-3">
+    <h5 class="fw-bold"><i class="bi bi-pin-map me-2 text-primary"></i>Контрольные точки</h5>
+    <div id="route-points" class="row g-3">
+      <%= f.fields_for :route_points do |rp| %>
+        <div class="col-12">
+          <div class="card border-0 shadow-sm" style="border-radius: 10px;">
+            <div class="card-body py-3">
+              <div class="row g-2 align-items-end">
+                <div class="col-4 col-md-1">
+                  <%= rp.label :order_index, "№", class: "form-label small fw-medium" %>
+                  <%= rp.number_field :order_index, class: "form-control form-control-sm" %>
+                </div>
+                <div class="col-8 col-md-3">
+                  <%= rp.label :title, class: "form-label small fw-medium" %>
+                  <%= rp.text_field :title, class: "form-control form-control-sm" %>
+                </div>
+                <div class="col-4 col-md-2">
+                  <%= rp.label :lat, class: "form-label small fw-medium" %>
+                  <%= rp.text_field :lat, class: "form-control form-control-sm" %>
+                </div>
+                <div class="col-4 col-md-2">
+                  <%= rp.label :lng, class: "form-label small fw-medium" %>
+                  <%= rp.text_field :lng, class: "form-control form-control-sm" %>
+                </div>
+                <div class="col-4 col-md-2">
+                  <%= rp.label :checkpoint_type, class: "form-label small fw-medium" %>
+                  <%= rp.select :checkpoint_type, RoutePoint.checkpoint_types.keys.map { |k| [t("activerecord.attributes.route_point.checkpoint_types.#{k}"), k] }, {}, class: "form-select form-select-sm" %>
+                </div>
+                <div class="col-12 col-md-1 text-end">
+                  <div class="form-check">
+                    <%= rp.check_box :_destroy, class: "form-check-input" %>
+                    <%= rp.label :_destroy, "Удалить", class: "small text-danger" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-3 border-top">
+    <%= f.submit class: "btn btn-primary btn-modern px-4" %>
+    <%= link_to "Отмена", routes_path, class: "btn btn-outline-secondary btn-modern px-4" %>
+  </div>
+<% end %>

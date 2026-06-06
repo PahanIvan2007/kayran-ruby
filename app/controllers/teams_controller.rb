@@ -1,0 +1,51 @@
+class TeamsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @teams = Team.includes(:captain).order(:title)
+  end
+
+  def show
+  end
+
+  def new
+    @team = Team.new
+  end
+
+  def edit
+  end
+
+  def create
+    @team = Team.new(team_params)
+
+    if @team.save
+      redirect_to @team, notice: "Команда создана"
+    else
+      render :new, status: :unprocessable_content
+    end
+  end
+
+  def update
+    if @team.update(team_params)
+      redirect_to @team, notice: "Команда обновлена"
+    else
+      render :edit, status: :unprocessable_content
+    end
+  end
+
+  def destroy
+    @team.destroy!
+    redirect_to teams_path, notice: "Команда удалена"
+  end
+
+  private
+
+  def set_team
+    @team = Team.find(params[:id])
+  end
+
+  def team_params
+    params.require(:team).permit(:title, :captain_id, :status)
+  end
+end

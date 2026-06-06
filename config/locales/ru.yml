@@ -1,0 +1,263 @@
+ru:
+  hello: "Привет"
+  home:
+    index:
+      title: "Kairan — платформа активностей"
+  events:
+    index:
+      title: "События"
+    create:
+      created: "Событие успешно создано"
+    update:
+      updated: "Событие обновлено"
+    destroy:
+      destroyed: "Событие удалено"
+  points:
+    create:
+      created: "Точка успешно создана"
+    update:
+      updated: "Точка обновлена"
+    destroy:
+      destroyed: "Точка удалена"
+  boats:
+    create:
+      created: "Лодка успешно добавлена"
+    update:
+      updated: "Лодка обновлена"
+    destroy:
+      destroyed: "Лодка удалена"
+  routes:
+    create:
+      created: "Маршрут успешно создан"
+    update:
+      updated: "Маршрут обновлен"
+    destroy:
+      destroyed: "Маршрут удален"
+  rentals:
+    create:
+      created: "Аренда успешно создана"
+    update:
+      updated: "Аренда обновлена"
+  activerecord:
+    models:
+      user: "Пользователь"
+      event: "Событие"
+      point: "Точка"
+      boat: "Лодка"
+      route: "Маршрут"
+      route_point: "Контрольная точка"
+      rental: "Аренда"
+      team: "Команда"
+      team_member: "Участник команды"
+      match: "Матч"
+      tournament: "Турнир"
+      franchise: "Франшиза"
+      gps_track: "GPS-трек"
+      gps_track_point: "Точка трека"
+      payment: "Платеж"
+      log: "Журнал"
+    attributes:
+      user:
+        first_name: "Имя"
+        last_name: "Фамилия"
+        phone: "Телефон"
+        role: "Роль"
+        email: "Email"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+        current_password: "Текущий пароль"
+        remember_me: "Запомнить меня"
+        medical_flags: "Медицинские ограничения"
+        accessibility_level: "Уровень доступности"
+        roles:
+          participant: "Участник"
+          instructor: "Инструктор"
+          judge: "Судья"
+          volunteer: "Волонтёр"
+          franchise_admin: "Администратор франшизы"
+          system_admin: "Администратор системы"
+        statuses:
+          active: "Активен"
+          blocked: "Заблокирован"
+          deleted: "Удалён"
+          pending: "Ожидает"
+        accessibility_levels:
+          no_restrictions: "Нет"
+          low: "Низкий"
+          medium: "Средний"
+          high: "Высокий"
+      event:
+        title: "Название"
+        description: "Описание"
+        event_type: "Тип события"
+        start_time: "Начало"
+        end_time: "Окончание"
+        point_id: "Точка"
+        route_id: "Маршрут"
+        status: "Статус"
+        visibility: "Видимость"
+        event_types:
+          rental: "Аренда"
+          training: "Тренировка"
+          route: "Маршрут"
+          match: "Матч"
+          tournament: "Турнир"
+          inclusive_program: "Инклюзивная программа"
+          festival: "Фестиваль"
+        statuses:
+          planned: "Запланировано"
+          active: "Активно"
+          completed: "Завершено"
+          cancelled: "Отменено"
+          emergency: "Чрезвычайная ситуация"
+        visibilities:
+          public_event: "Публичное"
+          private_event: "Частное"
+          franchise_only: "Только франшиза"
+      point:
+        title: "Название"
+        address: "Адрес"
+        lat: "Широта"
+        lng: "Долгота"
+        franchise_id: "Франшиза"
+        status: "Статус"
+        point_types:
+          base: "База"
+          franchise: "Франшиза"
+          temporary_event: "Временная площадка"
+          storage: "Склад"
+        statuses:
+          active: "Активна"
+          inactive: "Неактивна"
+          closed: "Закрыта"
+      boat:
+        serial_number: "Номер"
+        boat_type: "Тип"
+        color: "Цвет"
+        capacity: "Вместимость"
+        point_id: "Точка"
+        status: "Статус"
+        condition_level: "Состояние"
+        last_service_date: "Последнее ТО"
+        statuses:
+          available: "Доступна"
+          rented: "В аренде"
+          repair: "Ремонт"
+          inactive: "Неактивна"
+          lost: "Утеряна"
+        condition_levels:
+          excellent: "Отличное"
+          good: "Хорошее"
+          fair: "Удовлетворительное"
+          poor: "Плохое"
+      route:
+        title: "Название"
+        description: "Описание"
+        difficulty: "Сложность"
+        distance_km: "Расстояние (км)"
+        estimated_duration: "Длительность (мин)"
+        route_type: "Тип маршрута"
+        status: "Статус"
+        difficulties:
+          easy: "Лёгкий"
+          medium: "Средний"
+          hard: "Сложный"
+          adaptive: "Адаптивный"
+        route_types:
+          water: "Водный"
+          hiking: "Пеший"
+          mixed: "Смешанный"
+        statuses:
+          active: "Активен"
+          inactive: "Неактивен"
+          closed: "Закрыт"
+      route_point:
+        order_index: "Порядок"
+        title: "Название"
+        lat: "Широта"
+        lng: "Долгота"
+        checkpoint_type: "Тип точки"
+        checkpoint_types:
+          start: "Старт"
+          waypoint: "Путевая"
+          finish: "Финиш"
+          rest: "Отдых"
+          danger: "Опасность"
+      rental:
+        event_id: "Событие"
+        boat_id: "Лодка"
+        start_time: "Начало"
+        end_time: "Окончание"
+        status: "Статус"
+        statuses:
+          active: "Активна"
+          completed: "Завершена"
+          cancelled: "Отменена"
+          overdue: "Просрочена"
+      team:
+        title: "Название"
+        captain_id: "Капитан"
+        status: "Статус"
+        statuses:
+          active: "Активна"
+          inactive: "Неактивна"
+          disbanded: "Расформирована"
+      match:
+        start_time: "Начало"
+        end_time: "Окончание"
+        score_a: "Счёт команды A"
+        score_b: "Счёт команды B"
+        status: "Статус"
+        statuses:
+          scheduled: "Запланирован"
+          active: "Активен"
+          completed: "Завершён"
+          cancelled: "Отменён"
+          postponed: "Перенесён"
+      tournament:
+        title: "Название"
+        format: "Формат"
+        status: "Статус"
+        formats:
+          knockout: "Плей-офф"
+          round_robin: "Круговая система"
+          group_stage: "Групповой этап"
+        statuses:
+          planned: "Запланирован"
+          active: "Активен"
+          completed: "Завершён"
+          cancelled: "Отменён"
+      franchise:
+        title: "Название"
+        owner_id: "Владелец"
+        status: "Статус"
+        statuses:
+          active: "Активна"
+          suspended: "Приостановлена"
+          closed: "Закрыта"
+      gps_track:
+        status: "Статус"
+        statuses:
+          active: "Активен"
+          completed: "Завершён"
+          interrupted: "Прерван"
+      payment:
+        amount: "Сумма"
+        currency: "Валюта"
+        payment_provider: "Провайдер"
+        payment_status: "Статус"
+        payment_statuses:
+          pending: "Ожидает"
+          completed: "Завершён"
+          failed: "Ошибка"
+          refunded: "Возвращён"
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+  time:
+    formats:
+      default: "%d.%m.%Y %H:%M"
+      short: "%d.%m %H:%M"
+      long: "%d %B %Y %H:%M"

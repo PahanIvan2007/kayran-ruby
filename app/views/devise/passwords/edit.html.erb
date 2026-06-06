@@ -1,0 +1,42 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-warning text-white mb-3" style="width: 64px; height: 64px;">
+          <i class="bi bi-shield-lock" style="font-size: 1.75rem;"></i>
+        </div>
+        <h2 class="fw-bold">Новый пароль</h2>
+      </div>
+
+      <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="card-body p-4">
+          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+            <%= f.hidden_field :reset_password_token %>
+
+            <div class="mb-3">
+              <%= f.label :password, "Новый пароль", class: "form-label fw-medium" %>
+              <% if @minimum_password_length %>
+                <small class="text-muted">(<%= @minimum_password_length %> символов минимум)</small>
+              <% end %>
+              <%= f.password_field :password, class: "form-control", autofocus: true, autocomplete: "new-password", placeholder: "••••••••" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, "Подтвердите пароль", class: "form-label fw-medium" %>
+              <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Изменить пароль", class: "btn btn-primary btn-lg btn-modern" %>
+            </div>
+          <% end %>
+
+          <div class="mt-4 text-center">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

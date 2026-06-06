@@ -1,0 +1,67 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white mb-3" style="width: 64px; height: 64px;">
+          <i class="bi bi-person-plus" style="font-size: 1.75rem;"></i>
+        </div>
+        <h2 class="fw-bold">Создать аккаунт</h2>
+        <p class="text-muted">Присоединяйтесь к Kairan</p>
+      </div>
+
+      <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+        <div class="card-body p-4">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="mb-1">
+                  <%= f.label :first_name, class: "form-label fw-medium" %>
+                  <%= f.text_field :first_name, class: "form-control", autofocus: true, placeholder: "Иван" %>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-1">
+                  <%= f.label :last_name, class: "form-label fw-medium" %>
+                  <%= f.text_field :last_name, class: "form-control", placeholder: "Петров" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-1">
+              <%= f.label :phone, class: "form-label fw-medium" %>
+              <%= f.phone_field :phone, class: "form-control", placeholder: "+7 (999) 123-45-67" %>
+            </div>
+
+            <div class="mb-1">
+              <%= f.label :email, class: "form-label fw-medium" %>
+              <%= f.email_field :email, class: "form-control", autocomplete: "email", placeholder: "email@example.com" %>
+            </div>
+
+            <div class="mb-1">
+              <%= f.label :password, class: "form-label fw-medium" %>
+              <% if @minimum_password_length %>
+                <small class="text-muted">(минимум <%= @minimum_password_length %> символов)</small>
+              <% end %>
+              <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, class: "form-label fw-medium" %>
+              <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Зарегистрироваться", class: "btn btn-primary btn-lg btn-modern" %>
+            </div>
+          <% end %>
+
+          <div class="mt-4 text-center">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

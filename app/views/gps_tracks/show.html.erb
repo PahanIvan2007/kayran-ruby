@@ -1,0 +1,62 @@
+<div class="container py-4">
+  <div class="mb-3">
+    <%= link_to gps_tracks_path, class: "btn btn-outline-secondary btn-sm btn-modern" do %><i class="bi bi-arrow-left me-1"></i> Назад<% end %>
+  </div>
+
+  <div class="card border-0 shadow-lg" style="border-radius: 16px;">
+    <div class="card-body p-4">
+      <div class="d-flex gap-2 mb-1">
+        <span class="badge badge-modern bg-<%= @gps_track.active? ? 'success' : 'secondary' %>"><%= t("activerecord.attributes.gps_track.statuses.#{@gps_track.status}") %></span>
+      </div>
+      <h1 class="fw-bold mb-4" style="font-size: 1.75rem;"><i class="bi bi-satellite text-primary me-2"></i>GPS-трек #<%= @gps_track.id %></h1>
+
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-person fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Пользователь</small>
+              <span class="fw-medium"><%= @gps_track.user&.full_name %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-calendar-event fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Событие</small>
+              <span class="fw-medium"><%= @gps_track.event&.title || "—" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-play-circle fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Начало</small>
+              <span class="fw-medium"><%= l(@gps_track.started_at, format: :long) %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-stop-circle fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Окончание</small>
+              <span class="fw-medium"><%= l(@gps_track.ended_at, format: :long) if @gps_track.ended_at %></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: #f8fafc;">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 text-info" style="width: 48px; height: 48px; min-width: 48px;"><i class="bi bi-pin-map fs-5"></i></div>
+            <div>
+              <small class="text-muted d-block">Точек трека</small>
+              <span class="fw-medium"><%= @points.count %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

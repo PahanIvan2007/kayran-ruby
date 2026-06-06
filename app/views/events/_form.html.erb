@@ -1,0 +1,67 @@
+<%= form_with(model: event, class: "row g-4") do |f| %>
+  <% if event.errors.any? %>
+    <div class="col-12">
+      <div class="alert alert-danger d-flex align-items-center gap-2">
+        <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
+        <div>
+          <strong><%= pluralize(event.errors.count, "ошибка") %>:</strong>
+          <ul class="mb-0 mt-1">
+            <% event.errors.each do |err| %>
+              <li><%= err.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="col-12">
+    <%= f.label :title, class: "form-label fw-medium" %>
+    <%= f.text_field :title, class: "form-control", required: true, placeholder: "Название события" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :event_type, class: "form-label fw-medium" %>
+    <%= f.select :event_type, Event.event_types.keys.map { |k| [t("activerecord.attributes.event.event_types.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :status, class: "form-label fw-medium" %>
+    <%= f.select :status, Event.statuses.keys.map { |k| [t("activerecord.attributes.event.statuses.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :start_time, class: "form-label fw-medium" %>
+    <%= f.datetime_field :start_time, class: "form-control" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :end_time, class: "form-label fw-medium" %>
+    <%= f.datetime_field :end_time, class: "form-control" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :point_id, class: "form-label fw-medium" %>
+    <%= f.collection_select :point_id, Point.active.order(:title), :id, :title, { include_blank: "—" }, class: "form-select" %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :route_id, class: "form-label fw-medium" %>
+    <%= f.collection_select :route_id, Route.active.order(:title), :id, :title, { include_blank: "—" }, class: "form-select" %>
+  </div>
+
+  <div class="col-12">
+    <%= f.label :description, class: "form-label fw-medium" %>
+    <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Описание события..." %>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <%= f.label :visibility, class: "form-label fw-medium" %>
+    <%= f.select :visibility, Event.visibilities.keys.map { |k| [t("activerecord.attributes.event.visibilities.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-3 border-top">
+    <%= f.submit class: "btn btn-primary btn-modern px-4" %>
+    <%= link_to "Отмена", events_path, class: "btn btn-outline-secondary btn-modern px-4" %>
+  </div>
+<% end %>

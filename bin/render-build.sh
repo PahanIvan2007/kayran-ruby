@@ -6,4 +6,3 @@ yarn install
 yarn build:css
 
 bundle exec rails assets:precompile
-bundle exec rails db:migrate

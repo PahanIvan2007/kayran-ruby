@@ -3,7 +3,7 @@ services:
     name: kairan
     env: ruby
     buildCommand: "./bin/render-build.sh"
-    startCommand: bundle exec puma -C config/puma.rb
+    startCommand: ./bin/start.sh
     envVars:
       - key: DATABASE_URL
         fromDatabase:
